@@ -15,6 +15,10 @@ module.exports = function(app){
 		res.render('dashboard.ejs');
 	});
 	
+	app.post('/api/url_readability', function(req, res) {
+		res.send({content : 'check'});
+	});
+	
 	app.get('/*', function(req, res){
 		res.render('login.ejs');
 	});
