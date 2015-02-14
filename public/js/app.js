@@ -2,7 +2,7 @@ function AppViewModel() {
 	this.url_field = ko.observable("");
 	
 	self.send_url = function() {
-		$.ajax("url_readability", {
+		$.ajax("api/url_readability", {
             data: ko.toJSON(this.url_field),
             type: "post", contentType: "application/json",
             success: function(result) {
