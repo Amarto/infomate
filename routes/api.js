@@ -47,21 +47,49 @@ router.get('/extract',function(req, res){
                     console.log(mostImportantName);
                     console.log(JSON.stringify(entities.entity[0].eid));
 
-                    var mostImportantRelation = JSON.stringify(JSONoutput.doc.relations.relation[0]);
-                    console.log(mostImportantRelation);
+                    // var mostImportantRelation = JSON.stringify(JSONoutput.doc.relations.relation[0]);
+                    // console.log(mostImportantRelation);
 
-                    var relation = JSON.stringify(JSONoutput.doc.relations.relation[0].type);
+                    // var relation = JSON.stringify(JSONoutput.doc.relations.relation[0].type);
 
-                    var otherEntityeid = JSON.stringify(JSONoutput.doc.relations.relation[0].rel_entity_arg[1].eid);
+                    // var otherEntityeid = JSON.stringify(JSONoutput.doc.relations.relation[0].rel_entity_arg[1].eid);
 
-                    var otherEntityNum = parseInt(otherEntityeid.substring(3, otherEntityeid.length - 1));
-                    // console.log(otherEntityNum);
-                    var otherEntityName = (JSON.stringify(entities.entity[otherEntityNum].mentref[0].$t));
+                    // var otherEntityNum = parseInt(otherEntityeid.substring(3, otherEntityeid.length - 1));
+                    // // console.log(otherEntityNum);
+                    // var otherEntityName = (JSON.stringify(entities.entity[otherEntityNum].mentref[0].$t));
 
-                    var question = mostImportantName + relation + otherEntityName;
-                    console.log(question);
-                    // alert('True or false: ')
-                    // console.log(mostImportantEntity.eid);
+                    // var question = mostImportantName + relation + otherEntityName;
+                    // console.log(question);
+
+                    console.log(entities.entity);
+
+                    var questions = [];
+                    questions.push('hello!');
+
+                    for (var i = 0; i < entities.entity.length; i++)
+                    {
+                        // console.log('for loop entered');
+
+                        var entityScore = parseFloat(JSON.stringify(entities.entity[i].score));
+                        // console.log(entityScore);
+                        if (entityScore >= .5 && entities.entity[i].mentref[0] !== undefined) {
+
+                            var entityType = JSON.stringify(entities.entity[i].type);
+                            console.log(entityType);
+                            if (entityType === '"PERSON"')
+                                questions.push('Who is ' + JSON.stringify(entities.entity[i].mentref[0].$t));
+
+                            else if (entityType === '"GPE"')
+                                questions.push('Where is ' + JSON.stringify(entities.entity[i].mentref[0].$t));
+
+                            else if (entityType === '"ORGANIZATION"')
+                                questions.push('What is ' + JSON.stringify(entities.entity[i].mentref[0].$t));
+
+                        } 
+                    }
+
+                    console.log(questions);
+
 
 
 
