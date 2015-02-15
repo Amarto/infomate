@@ -1,6 +1,7 @@
 var extractor = require('unfluff');
 var router = require('express').Router();
 var request = require('request');
+var watsonQA = require('askwatson');
 
 var Entity = function(aName, aType) {
 	this.question = '';
@@ -25,7 +26,28 @@ var makeRequest = function(articleUrl, callback) {
 	})
 	
 	return req;
-}	
+}
+
+router.post('/ask', function(req, res) {
+    var entities = req.body; // TODO
+    // console.log(JSON.stringify(req.body));
+
+    //parse each entity of the JSON
+    var questionArray = [];
+    for (var i = 0; i < entities.length; i++) {
+        var currentQuestion = 'Is ' + entities[i].name + ' ' + entities[i].answer;
+        questionArray.push(currentQuestion);
+    }
+
+    console.log(questionArray);
+    
+    for(var i = 0; i < questionArray.length; i++) {
+        watsonQA.ask('politics', questionArray[i], function(err, answer) {
+            console.log(answer);
+    });
+
+};
+});
 
 router.get('/extract',function(req, res){
     var articleUrl = req.query.url;
@@ -43,32 +65,10 @@ router.get('/extract',function(req, res){
 
 					// text -- plaintext
 					// parse -- watsonified version
-                    // var JSONoutput = JSON.parse(require('xml2json').toJson(result));
-                    // var entities = JSONoutput.entities;
-                    // var mostImportantEntity = entities.entity[0].mentref[0].$t;  //???!!
+
 
                     var JSONoutput = JSON.parse(require('xml2json').toJson(result));
                     var entities = JSONoutput.doc.entities;
-                    // var mostImportantEntity = entities[0];
-                    var mostImportantName = JSON.stringify(entities.entity[0].mentref[0].$t);
-                    console.log(mostImportantName);
-                    console.log(JSON.stringify(entities.entity[0].eid));
-
-                    // var mostImportantRelation = JSON.stringify(JSONoutput.doc.relations.relation[0]);
-                    // console.log(mostImportantRelation);
-
-                    // var relation = JSON.stringify(JSONoutput.doc.relations.relation[0].type);
-
-                    // var otherEntityeid = JSON.stringify(JSONoutput.doc.relations.relation[0].rel_entity_arg[1].eid);
-
-                    // var otherEntityNum = parseInt(otherEntityeid.substring(3, otherEntityeid.length - 1));
-                    // // console.log(otherEntityNum);
-                    // var otherEntityName = (JSON.stringify(entities.entity[otherEntityNum].mentref[0].$t));
-
-                    // var question = mostImportantName + relation + otherEntityName;
-                    // console.log(question);
-
-                    console.log(entities.entity);
 
                     var questions = [];
 

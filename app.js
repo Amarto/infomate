@@ -4,7 +4,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     watson = require('watson-developer-cloud-alpha'),
     config = require('./config'),
-    relationship_extraction = watson.relationship_extraction(config.relationship_extraction);
+    relationship_extraction = watson.relationship_extraction(config.relationship_extraction),
+    question_and_answer = watson.question_and_answer(config.question_and_answer);
 // express configuration
 app.use(bodyParser.json()); // set middleware to only accept JSON
 app.use(express.static(__dirname + '/public'));
