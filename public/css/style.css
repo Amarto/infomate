@@ -360,7 +360,6 @@ a.learn_more2:hover{
 	position:relative;
 	}
 	
-	
 .top_cont_latest{
 	background:url(../img/dashboard_pic.png) no-repeat right bottom;
 }
@@ -373,7 +372,7 @@ a.learn_more2:hover{
 }
 
 .work_section { 
-	padding:110px 0 20px;
+	padding:20px 0 20px; /* before was 110px 0 20px */
 }
 
 

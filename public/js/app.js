@@ -3,7 +3,13 @@ function AppViewModel() {
 	
 	this.url_field = ko.observable();
 	this.myTextBox = ko.observable();
-	this.questionsArray = ko.observableArray();
+	this.questionsArray = ko.observableArray([
+		'Who is Karzai?', 
+		'Who is Barack Obama?',
+		'Who is Angela Merkel?',
+		'Where is Venezuela?',
+		'What is crystal?'
+	]);
 
 	this.send_url = function() {
 		$.ajax("api/extract", {
@@ -16,7 +22,6 @@ function AppViewModel() {
       	alert(JSON.stringify(result));
 				if (typeof result.doc === 'string') {
 					self.myTextBox(result.doc);
-					$('.plain-text-content').show();
 				}
 				else if (typeof result.error === 'string') {
 					// show an error message
