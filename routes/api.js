@@ -42,9 +42,25 @@ router.get('/extract',function(req, res){
 
                     var JSONoutput = JSON.parse(require('xml2json').toJson(result));
                     var entities = JSONoutput.doc.entities;
-                    var mostImportantEntity = entities[0];
+                    // var mostImportantEntity = entities[0];
                     var mostImportantName = JSON.stringify(entities.entity[0].mentref[0].$t);
                     console.log(mostImportantName);
+                    console.log(JSON.stringify(entities.entity[0].eid));
+
+                    var mostImportantRelation = JSON.stringify(JSONoutput.doc.relations.relation[0]);
+                    console.log(mostImportantRelation);
+
+                    var relation = JSON.stringify(JSONoutput.doc.relations.relation[0].type);
+
+                    var otherEntityeid = JSON.stringify(JSONoutput.doc.relations.relation[0].rel_entity_arg[1].eid);
+
+                    var otherEntityNum = parseInt(otherEntityeid.substring(3, otherEntityeid.length - 1));
+                    // console.log(otherEntityNum);
+                    var otherEntityName = (JSON.stringify(entities.entity[otherEntityNum].mentref[0].$t));
+
+                    var question = mostImportantName + relation + otherEntityName;
+                    console.log(question);
+                    // alert('True or false: ')
                     // console.log(mostImportantEntity.eid);
 
 
