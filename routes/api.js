@@ -35,7 +35,8 @@ router.get('/extract',function(req, res){
                 else {
 					// text -- plaintext
 					// parse -- watsonified version
-                    res.json(JSON.parse(require('xml2json').toJson(result)));
+                    var JSONoutput = JSON.parse(require('xml2json').toJson(result));
+                    res.json(JSONoutput);
                 }
             });
         })
