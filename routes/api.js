@@ -82,8 +82,8 @@ router.get('/extract',function(req, res){
                     for (var i = 0; i < entities.entity.length; i++)
                     {
                         var entityScore = parseFloat(JSON.stringify(entities.entity[i].score));
-                      	
-                        if (entityScore >= .5 && entities.entity[i].mentref[0] !== undefined) {
+
+                        if (entityScore >= .7 && entities.entity[i].mentref[0] !== undefined) {
 														var entityName = JSON.stringify(entities.entity[i].mentref[0].$t);
 														entityName = entityName.substring(1, entityName.length - 1);
 														var entityType = JSON.stringify(entities.entity[i].type);
@@ -92,13 +92,13 @@ router.get('/extract',function(req, res){
                             
 														var shouldPush = false;
 														
-                            if (entityType === '"PERSON"') {
+                            if (entityType === '"PERSON"'&& (entityName.indexOf("\"") === -1)) {
                                 currentEntity.question = 'Who is ' + entityName + '?';
 																shouldPush = true;
-														} else if (entityType === '"GPE"') {
+														} else if (entityType === '"GPE"'&& (entityName.indexOf("\"") === -1)) {
                                 currentEntity.question = 'Where is ' + entityName + '?';
 																shouldPush = true;
-														} else if (entityType === '"ORGANIZATION"') {
+														} else if (entityType === '"ORGANIZATION"'&& (entityName.indexOf("\"") === -1)) {
                                 currentEntity.question = 'What is ' + entityName + '?';
 																shouldPush = true;
 														}
