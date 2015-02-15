@@ -22,9 +22,10 @@ function AppViewModel() {
 				}
 				else if (typeof result.error === 'string') {
 					// show an error message
+					alert('error: result not defined');
 				}
 				else {
-					alert('hi');
+					alert('error');
 					// show another error message
 				}
 			},

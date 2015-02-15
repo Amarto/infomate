@@ -36,7 +36,21 @@ router.get('/extract',function(req, res){
 
 					// text -- plaintext
 					// parse -- watsonified version
+                    // var JSONoutput = JSON.parse(require('xml2json').toJson(result));
+                    // var entities = JSONoutput.entities;
+                    // var mostImportantEntity = entities.entity[0].mentref[0].$t;  //???!!
+
                     var JSONoutput = JSON.parse(require('xml2json').toJson(result));
+                    var entities = JSONoutput.doc.entities;
+                    var mostImportantEntity = entities[0];
+                    var mostImportantName = JSON.stringify(entities.entity[0].mentref[0].$t);
+                    console.log(mostImportantName);
+                    // console.log(mostImportantEntity.eid);
+
+
+
+
+
                     res.json(JSONoutput);
                 }
             });
