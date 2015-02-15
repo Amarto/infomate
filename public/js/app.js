@@ -11,11 +11,12 @@ var parseEntities = function(str, observArr) {
     //parse each entity of the JSON
     for (var i = 0; i < entities.length; i++) {
         var currentQuestion = {
-					question: entities[i].question,
-					answer: entities[i].answer,
-					name: entities[i].name,
-					type: entities[i].type
+					question: ko.observable(entities[i].question),
+					answer: ko.observable(entities[i].answer),
+					name: ko.observable(entities[i].name),
+					type: ko.observable(entities[i].type)
 				};
+				
         observArr.push(currentQuestion);
     }
 };
@@ -25,21 +26,6 @@ function AppViewModel() {
 	
 	this.urlField = ko.observable();
 	this.myTextBox = ko.observable();
-	
-	var demoQuestion = {
-		question : 'Who is Barack Obama?',
-		name : 'Barack Obama',
-		type : '"PERSON"',
-		answer : ''
-	};
-
-	var demoQuestion2 = {
-		question : 'Where is Venezuela?',
-		name : 'Venezuela',
-		type : '"GPE"',
-		answer : ''
-	};
-	
 	this.questionsArray = ko.observableArray([]);
 
 	this.send_url = function() {
