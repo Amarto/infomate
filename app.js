@@ -2,8 +2,9 @@ var port = 4000;
 
 /** Set up Express with module dependencies */
 var express = require('express'),
+	watson = require('extract-relationships'),
 	http = require('http');
-	
+
 var app = module.exports = express();
 
 /** Configuration */
@@ -18,7 +19,7 @@ app.use("/fonts", express.static(__dirname + "/public/fonts"));
 app.use("/img", express.static(__dirname + "/public/img"));
 
 /* linking */
-require('./routes')(app); // sets up endpoints
+require('./routes')(app, watson); // sets up endpoints
 
 /** Start Server */
 http.createServer(app).listen(app.get('port'), function () {
