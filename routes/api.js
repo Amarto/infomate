@@ -78,6 +78,7 @@ router.get('/extract',function(req, res){
                       	
                         if (entityScore >= .5 && entities.entity[i].mentref[0] !== undefined) {
 														var entityName = JSON.stringify(entities.entity[i].mentref[0].$t);
+														entityName = entityName.substring(1, entityName.length - 1);
 														var entityType = JSON.stringify(entities.entity[i].type);
 														
 														var currentEntity = new Entity(entityName, entityType);
