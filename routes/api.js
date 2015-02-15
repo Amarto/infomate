@@ -33,6 +33,7 @@ router.get('/extract',function(req, res){
                 if (err)
                     res.json(err);
                 else {
+
 					// text -- plaintext
 					// parse -- watsonified version
                     var JSONoutput = JSON.parse(require('xml2json').toJson(result));
