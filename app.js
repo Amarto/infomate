@@ -13,6 +13,7 @@ app.use(express.static(__dirname + '/public'));
 // Filter
 app.use(function(req, res, next) {
     req.relationship_extraction = relationship_extraction;
+    req.question_and_answer = question_and_answer;
     next();
 });
 

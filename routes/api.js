@@ -1,7 +1,6 @@
 var extractor = require('unfluff');
 var router = require('express').Router();
 var request = require('request');
-var watsonQA = require('askwatson');
 
 var Entity = function(aName, aType) {
 	this.question = '';
@@ -42,14 +41,19 @@ router.post('/ask', function(req, res) {
     console.log(questionArray);
 
     var answerArray = [];
-    for(var i = 0; i < questionArray.length; i++) {
-        console.log('current question: ' + JSON.stringify(questionArray[i]));
-        watsonQA.ask('healthcare', questionArray[i], function(err, answer) {
-            answerArray.push(answer);
+    questionArray.forEach(function(question, index){
+        req.question_and_answer.ask({text: question}, function(err,result) {
+            answerArray.push({
+                question: result[0]['question'].questionText, 
+                answer:   result[0]['question']['evidencelist'][0].text 
+            });
+            
+            if (index === (questionArray.length - 1)){
+                console.log(answerArray);
+                res.json(answerArray);
+            }
         });
-    }
-
-    res.json(answerArray);
+    });
 });
 
 router.get('/extract',function(req, res){
