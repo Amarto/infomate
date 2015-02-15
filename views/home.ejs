@@ -99,13 +99,12 @@ function resizeText() {
 					<div class="animated fadeInDown wow">
 						<form id="url-form" data-bind="submit: send_url"> 
 							<div class="form-group" style="text-align:center">
-							<input data-bind="value: url_field" type="url" class="form-control" placeholder="url please"><br>
-							<input type="submit" class="btn btn-default" value="quiz me">
+								<input data-bind="value: urlField" type="url" class="form-control" placeholder="url please"><br>
+								<input type="submit" class="btn btn-default" value="quiz me">
+							</div>
 						</form>
-					</div><!-- knockout viewmodel -->
+					</div>
 
-					
-					
         </div>
         <div class="col-lg-4">
         </div>
@@ -130,21 +129,27 @@ function resizeText() {
     <h2>Questions</h2>
     <div class="work_section">
       <div class="row">
-        <div class="col-lg-6 col-sm-6 wow fadeInLeft delay-05s">
-							<table class="table table-striped" id="user-trips-table">
-								<tbody data-bind="foreach: questionsArray">
-									<td>
-										<div class="service-list">
-											<div class="service-list-col1"> <i class="icon-doc"></i> </div>
-											<div class="service-list-col2">
-											<h3>Question <span data-bind="text: $index() + 1"></span></h3>
-											<p data-bind="text: $data">Possible Answer.</p>
-										</div>
-									</td>
-								</tbody>
-							</table>
-						</div>
-        <figure class="col-lg-6 col-sm-6  text-right wow fadeInUp delay-02s"> </figure>
+				<div class="col-lg-3 col-sm-3"></div>
+				<div class="col-lg-6 col-sm-6 wow fadeInLeft delay-05s">
+					<table class="table table-striped" id="user-trips-table">
+						<tbody data-bind="foreach: questionsArray">
+							<td>
+								<div class="service-list">
+									<div class="service-list-col1"> <i class="icon-doc"></i> </div>
+									<div class="service-list-col2">
+									<h3><strong>Question <span data-bind="text: $index() + 1"></strong></span>:
+									 <span data-bind="text: question"></span></h3>
+									<p><span data-bind="text: name"></span> is</p>
+									<input data-bind="value: answer" type="url" class="form-control" placeholder="..."><br>
+								</div>
+							</td>
+						</tbody>
+					</table>
+					<div class="form-group" style="text-align:center">
+						<input type="submit" data-bind="click: sendAnswers" class="btn btn-default" value="submit!">
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-3"></div>
       </div>
     </div>
   </div>

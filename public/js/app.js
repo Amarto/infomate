@@ -1,20 +1,38 @@
+var Entity = function(aName, aType) {
+	this.question = "";
+	this.answer = "";
+	this.name = aName;
+	this.type = aType;
+};
+
 function AppViewModel() {
 	var self = this;
 	
-	this.url_field = ko.observable();
+	this.urlField = ko.observable();
 	this.myTextBox = ko.observable();
+	
+	var demoQuestion = {
+		question : 'Who is Barack Obama?',
+		name : 'Barack Obama',
+		type : '"PERSON"',
+		answer : ''
+	};
+
+	var demoQuestion2 = {
+		question : 'Where is Venezuela?',
+		name : 'Venezuela',
+		type : '"GPE"',
+		answer : ''
+	};
+	
 	this.questionsArray = ko.observableArray([
-		'Who is Karzai?', 
-		'Who is Barack Obama?',
-		'Who is Angela Merkel?',
-		'Where is Venezuela?',
-		'What is crystal?'
+		demoQuestion, demoQuestion2
 	]);
 
 	this.send_url = function() {
 		$.ajax("api/extract", {
 			data: {
-				url : this.url_field
+				url : this.urlField
 			},
       type: "get", 
 			contentType: "application/json",
@@ -24,16 +42,34 @@ function AppViewModel() {
 					self.myTextBox(result.doc);
 				}
 				else if (typeof result.error === 'string') {
-					// show an error message
 					alert('error: result not defined');
 				}
+				/*
 				else {
 					alert('error');
 					// show another error message
 				}
+				*/
 			}
 		});
 	};
+	
+	this.sendAnswers = function() {
+		$.ajax("api/ask", {
+				data: ko.toJSON(this.questionsArray),
+				type: "post", 
+				contentType: "application/json",
+				success: function(result) {
+					alert(JSON.stringify(result));
+					if (typeof result.doc === 'string') {
+						self.myTextBox(result.doc);
+					}
+					else if (typeof result.error === 'string') {
+						alert('error: result not defined');
+					}
+				}
+			});
+		};
 }
 
 // Activates knockout.js
