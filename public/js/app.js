@@ -5,10 +5,10 @@ var Entity = function(aName, aType) {
 	this.type = aType;
 };
 
-var parseEntities = function(str) {
-		var entities = JSON.stringify(str);
+var parseEntities = function(str, observArr) {
+		var entities = str;
+
     //parse each entity of the JSON
-    var questionArray = ko.observableArray();
     for (var i = 0; i < entities.length; i++) {
         var currentQuestion = {
 					question: entities[i].question,
@@ -16,10 +16,8 @@ var parseEntities = function(str) {
 					name: entities[i].name,
 					type: entities[i].type
 				};
-        questionArray.push(currentQuestion);
+        observArr.push(currentQuestion);
     }
-		
-		return questionArray;
 };
 
 function AppViewModel() {
@@ -43,12 +41,6 @@ function AppViewModel() {
 	};
 	
 	this.questionsArray = ko.observableArray([]);
-	
-	/*
-	this.questionsArray = ko.observableArray([
-		demoQuestion, demoQuestion2
-	]);
-	*/
 
 	this.send_url = function() {
 		$.ajax("api/extract", {
@@ -58,10 +50,9 @@ function AppViewModel() {
       type: "get", 
 			contentType: "application/json",
       success: function(result) {
-      	alert(JSON.stringify(result));
-				if (typeof result === 'string') {
-					this.questionsArray = parseEntities(result);
-				} else if (typeof result.error === 'string') {
+      		alert(JSON.stringify(result));
+			self.questionsArray = parseEntities(result, self.questionsArray);
+			if (typeof result.error === 'string') {
 					alert('error: result not defined');
 				}
 			}
