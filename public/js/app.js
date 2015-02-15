@@ -2,8 +2,10 @@ function AppViewModel() {
 	this.url_field = ko.observable("");
 	
 	self.send_url = function() {
+		alert(ko.toJSON(this.url_field));
+	
 		$.ajax("api/url_readability", {
-            data: ko.toJSON(this.url_field),
+            data: ko.toJSON({url : this.url_field}),
             type: "post", contentType: "application/json",
             success: function(result) {
 				if (typeof result.content === 'string') {
