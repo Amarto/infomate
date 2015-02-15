@@ -8,6 +8,7 @@
     "express": "*",
     "request": "^2.53.0",
     "unfluff": "^0.10.0",
-    "watson-developer-cloud-alpha": "^0.10.0"
+    "watson-developer-cloud-alpha": "^0.10.0",
+    "xml2json": "^0.5.1"
   }
 }
