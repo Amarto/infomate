@@ -1,9 +1,10 @@
 {
-	"name": "MyApp",
-	"version": "0.0.1",
-	"private"		: true,
-	"dependencies"	: {
-		"express": "*",
-		"ejs": "*"
-	}
+  "name": "MyApp",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "ejs": "*",
+    "express": "*",
+    "extract-relationships": "0.0.6"
+  }
 }
