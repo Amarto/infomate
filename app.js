@@ -1,32 +1,24 @@
-var port = 4000;
-
 /** Set up Express with module dependencies */
 var express = require('express'),
-	watson = require('extract-relationships'),
-	request = require('request'),
-	bodyParser = require('body-parser'),
-	http = require('http');
+    app = express(),
+    bodyParser = require('body-parser'),
+    watson = require('watson-developer-cloud-alpha'),
+    config = require('./config'),
+    relationship_extraction = watson.relationship_extraction(config.relationship_extraction);
+    Readability = require('./readability');
 
-var app = module.exports = express();
-
-var readability_token = 'befac10f8f98a1eb820dff6763b4bbbf7e251a85';
-
-/** Configuration */
-// all environments
-app.set('port', process.env.PORT || port);
+// express configuration
 app.use(bodyParser.json()); // set middleware to only accept JSON
+app.use(express.static(__dirname + '/public'));
 
-/** Routes */
-// serve all asset files from necessary directories
-app.use("/js", express.static(__dirname + "/public/js"));
-app.use("/css", express.static(__dirname + "/public/css"));
-app.use("/fonts", express.static(__dirname + "/public/fonts"));
-app.use("/img", express.static(__dirname + "/public/img"));
-
-/* linking */
-require('./routes')(app, watson, request, readability_token); // sets up endpoints
-
-/** Start Server */
-http.createServer(app).listen(app.get('port'), function () {
-	console.log('Express server listening on port ' + app.get('port'));
+// Filter
+app.use(function(req, res, next) {
+    req.relationship_extraction = relationship_extraction;
+    req.readability = new Readability(config.readability_token);
+    next();
 });
+
+require('./routes/index')(app);
+
+app.set('port', process.env.PORT || 4000);
+app.listen(app.get('port'));

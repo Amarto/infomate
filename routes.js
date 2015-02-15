@@ -32,8 +32,4 @@ module.exports = function(app, watson, request_module, token){
 		//res.send({content : "test: " + testVar});
 
 	});
-
-	app.get('/*', function(req, res){
-		res.render('home.ejs');
-	});
 };
