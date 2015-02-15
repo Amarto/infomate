@@ -54,8 +54,6 @@ function AppViewModel() {
 			type: "post", 
 			contentType: "application/json",
 			success: function(result) {
-
-				alert(JSON.stringify(result));
 				for (var i = 0; i < result.length; i++)
 				{
 					self.finalAnswers.push({
