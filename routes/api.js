@@ -46,6 +46,8 @@ router.post('/ask', function(req, res) {
             console.log(answer);
     });
 
+        
+
 };
 });
 

@@ -11,14 +11,15 @@ var parseEntities = function(str, observArr) {
     //parse each entity of the JSON
     for (var i = 0; i < entities.length; i++) {
         var currentQuestion = {
-					question: ko.observable(entities[i].question),
-					answer: ko.observable(entities[i].answer),
-					name: ko.observable(entities[i].name),
-					type: ko.observable(entities[i].type)
+					question: entities[i].question,
+					answer: entities[i].answer,
+					name: entities[i].name,
+					type: entities[i].type
 				};
-				
         observArr.push(currentQuestion);
     }
+
+
 };
 
 function AppViewModel() {
@@ -26,7 +27,7 @@ function AppViewModel() {
 	
 	this.urlField = ko.observable();
 	this.myTextBox = ko.observable();
-	this.questionsArray = ko.observableArray([]);
+	this.questionsArray = ko.observableArray();
 
 	this.send_url = function() {
 		$.ajax("api/extract", {
@@ -36,8 +37,8 @@ function AppViewModel() {
       type: "get", 
 			contentType: "application/json",
       success: function(result) {
-      		alert(JSON.stringify(result));
-			self.questionsArray = parseEntities(result, self.questionsArray);
+      		//alert(JSON.stringify(result));
+			parseEntities(result, self.questionsArray);
 			if (typeof result.error === 'string') {
 					alert('error: result not defined');
 				}
@@ -47,7 +48,7 @@ function AppViewModel() {
 	
 	this.sendAnswers = function() {
 		$.ajax("api/ask", {
-				data: ko.toJSON(this.questionsArray),
+				data: ko.toJSON(self.questionsArray),
 				type: "post", 
 				contentType: "application/json",
 				success: function(result) {
