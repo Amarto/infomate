@@ -1,13 +1,11 @@
-
-
 function AppViewModel() {
 	var self = this;
 	
 	this.url_field = ko.observable();
 	this.myTextBox = ko.observable();
 	this.questionsArray = ko.observableArray();
-	
-	this.send_url = function() {	
+
+	this.send_url = function() {
 		$.ajax("api/extract", {
 			data: {
 				url : this.url_field
@@ -27,11 +25,6 @@ function AppViewModel() {
 				else {
 					alert('error');
 					// show another error message
-				}
-			},
-			complete: function(text, status) {
-				if (status === 'sucess') {
-					alert("success!");
 				}
 			}
 		});
