@@ -5,8 +5,6 @@ var express = require('express'),
     watson = require('watson-developer-cloud-alpha'),
     config = require('./config'),
     relationship_extraction = watson.relationship_extraction(config.relationship_extraction);
-    Readability = require('./readability');
-
 // express configuration
 app.use(bodyParser.json()); // set middleware to only accept JSON
 app.use(express.static(__dirname + '/public'));
@@ -14,7 +12,6 @@ app.use(express.static(__dirname + '/public'));
 // Filter
 app.use(function(req, res, next) {
     req.relationship_extraction = relationship_extraction;
-    req.readability = new Readability(config.readability_token);
     next();
 });
 
