@@ -40,15 +40,16 @@ router.post('/ask', function(req, res) {
     }
 
     console.log(questionArray);
-    
+
+    var answerArray = [];
     for(var i = 0; i < questionArray.length; i++) {
-        watsonQA.ask('politics', questionArray[i], function(err, answer) {
-            console.log(answer);
-    });
+        console.log('current question: ' + JSON.stringify(questionArray[i]));
+        watsonQA.ask('healthcare', questionArray[i], function(err, answer) {
+            answerArray.push(answer);
+        });
+    }
 
-        
-
-};
+    res.json(answerArray);
 });
 
 router.get('/extract',function(req, res){
