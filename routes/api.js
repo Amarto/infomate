@@ -102,8 +102,7 @@ router.get('/extract',function(req, res){
                     }
 
                     console.log(questions);
-
-                    res.json(JSONoutput);
+                    res.json(questions);
                 }
             });
         })
