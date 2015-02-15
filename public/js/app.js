@@ -46,22 +46,32 @@ function AppViewModel() {
 		});
 	};
 	
+	this.finalAnswers = ko.observableArray();
+
 	this.sendAnswers = function() {
 		$.ajax("api/ask", {
-				data: ko.toJSON(self.questionsArray),
-				type: "post", 
-				contentType: "application/json",
-				success: function(result) {
-					alert(JSON.stringify(result));
-					if (typeof result === 'string') {
-						alert('in send answers callback: ' + result);
-					}
-					else if (typeof result.error === 'string') {
-						alert('error: result not defined');
-					}
+			data: ko.toJSON(self.questionsArray),
+			type: "post", 
+			contentType: "application/json",
+			success: function(result) {
+
+				alert(JSON.stringify(result));
+				for (var i = 0; i < result.length; i++)
+				{
+					self.finalAnswers.push({
+						question : result[i].question + '? ',
+						answer : result[i].answer
+					});
 				}
-			});
-		};
+				if (typeof result === 'string') {
+					alert('in send answers callback: ' + result);
+				}
+				else if (typeof result.error === 'string') {
+					alert('error: result not defined');
+				}
+			}
+		});
+	};
 }
 
 // Activates knockout.js
