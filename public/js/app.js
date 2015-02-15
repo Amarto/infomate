@@ -1,21 +1,35 @@
+
+
 function AppViewModel() {
-	this.url_field = ko.observable("");
+	var self = this;
 	
-	self.send_url = function() {
-		alert(ko.toJSON(this.url_field));
+	this.url_field = ko.observable();
+	this.myTextBox = ko.observable();
+	this.questionsArray = ko.observableArray();
 	
-		$.ajax("api/url_readability", {
-            data: ko.toJSON({url : this.url_field}),
-            type: "post", contentType: "application/json",
-            success: function(result) {
-				if (typeof result.content === 'string') {
-					alert('resp text: ' + result.content);
+	this.send_url = function() {	
+		$.ajax("api/extract", {
+			data: {
+				url : this.url_field
+			},
+      type: "get", 
+			contentType: "application/json",
+      success: function(result) {
+				if (typeof result.watson === 'string') {
+					self.myTextBox(result.watson);
+					$('.plain-text-content').show();
 				}
-				if (typeof result.error === 'string') {
+				else if (typeof result.error === 'string') {
 					// show an error message
 				}
 				else {
+					alert('hi');
 					// show another error message
+				}
+			},
+			complete: function(text, status) {
+				if (status === 'sucess') {
+					alert("success!");
 				}
 			}
 		});

@@ -33,11 +33,9 @@ router.get('/extract',function(req, res){
                 if (err)
                     res.json(err);
                 else {
-					// text -- plaintext
-					// parse -- watsonified version
-                    res.json({
-						'watson' : result
-					});
+										// text -- plaintext
+										// parse -- watsonified version
+                    res.json({'watson' : result});
                 }
             });
         })
