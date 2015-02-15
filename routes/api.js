@@ -3,10 +3,10 @@ var router = require('express').Router();
 var request = require('request');
 
 var Entity = function(aName, aType) {
-	question : "",
-	answer : "",
-	name : aName,
-	type : aType
+	this.question = '';
+	this.answer = '';
+	this.name = aName;
+	this.type = aType;
 };
 
 var makeRequest = function(articleUrl, callback) {
@@ -85,13 +85,13 @@ router.get('/extract',function(req, res){
 														var shouldPush = false;
 														
                             if (entityType === '"PERSON"') {
-                                currentType.question = 'Who is ' + entityName + '?';
+                                currentEntity.question = 'Who is ' + entityName + '?';
 																shouldPush = true;
 														} else if (entityType === '"GPE"') {
-                                currentType.question = 'Where is ' + entityName + '?';
+                                currentEntity.question = 'Where is ' + entityName + '?';
 																shouldPush = true;
 														} else if (entityType === '"ORGANIZATION"') {
-                                currentType.question = 'What is ' + entityName + '?';
+                                currentEntity.question = 'What is ' + entityName + '?';
 																shouldPush = true;
 														}
 														
